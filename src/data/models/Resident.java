@@ -1,10 +1,18 @@
 package data.models;
 
 public class Resident {
+    private int id;
     private String name;
-    private String id;
     private String phoneNumber;
-    private String  houseAddress;
+    private String houseAddress;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
@@ -12,14 +20,6 @@ public class Resident {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public String getPhoneNumber() {

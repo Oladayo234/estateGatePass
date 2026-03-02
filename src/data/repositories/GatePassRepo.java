@@ -1,17 +1,14 @@
 package data.repositories;
 
+import data.models.GatePass;
 import java.util.List;
 
 public interface GatePassRepo {
-
-    List<GatePasses> findAll();
-    GatePasses findById(int Id);
-    GatePasses save(GatePasses pass);
-    void delete(GatePasses pass);
-    void deleteById(int Id);
-    void deleteByObject(GatePasses pass);
+    List<GatePass> findAll();
+    GatePass findById(int id);
+    GatePass save(GatePass pass);
+    void delete(GatePass pass);
+    void deleteById(int id);
+    void deleteByObject(GatePass pass);
     void deleteAll();
-
-
-
 }

@@ -23,20 +23,13 @@ public class Visitors implements VisitorRepo {
     }
 
     @Override
-    public Visitor save(Visitor visitor) {
+    public void save(Visitor visitor) {
         if (visitor.getId() == 0) {
             visitor.setId(nextId++);
-            visitors.add(visitor);
-        } else {
-            Visitor existing = findById(visitor.getId());
-            if (existing != null) {
-                int index = visitors.indexOf(existing);
-                visitors.set(index, visitor);
-            } else {
-                visitors.add(visitor);
-            }
         }
-        return visitor;
+        if (!visitors.contains(visitor)) {
+            visitors.add(visitor);
+        }
     }
 
     @Override

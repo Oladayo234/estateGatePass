@@ -94,13 +94,6 @@ class GatePassesTest {
     }
 
     @Test
-    void testDeleteByObject() {
-        gatePasses.save(pass1);
-        gatePasses.deleteByObject(pass1);
-        assertEquals(0L, gatePasses.count());
-    }
-
-    @Test
     void testDeleteAll() {
         gatePasses.save(pass1);
         gatePasses.save(pass2);

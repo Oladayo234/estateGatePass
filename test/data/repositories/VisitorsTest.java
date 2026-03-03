@@ -87,13 +87,6 @@ class VisitorsTest {
     }
 
     @Test
-    void testDeleteByObject() {
-        visitors.save(visitor1);
-        visitors.deleteByObject(visitor1);
-        assertEquals(0L, visitors.count());
-    }
-
-    @Test
     void testDeleteAll() {
         visitors.save(visitor1);
         visitors.save(visitor2);

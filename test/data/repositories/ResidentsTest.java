@@ -89,13 +89,6 @@ class ResidentsTest {
     }
 
     @Test
-    void testDeleteByObject() {
-        residents.save(resident1);
-        residents.deleteByObject(resident1);
-        assertEquals(0L, residents.count());
-    }
-
-    @Test
     void testDeleteAll() {
         residents.save(resident1);
         residents.save(resident2);

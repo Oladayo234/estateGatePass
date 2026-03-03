@@ -8,6 +8,6 @@ public interface ResidentRepo {
     Resident save(Resident resident);
     void delete(Resident resident);
     void deleteById(int id);
-    void deleteByObject(Resident resident);
     void deleteAll();
+    long count();
 }

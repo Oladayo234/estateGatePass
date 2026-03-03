@@ -53,16 +53,11 @@ public class GatePasses implements GatePassRepo {
     }
 
     @Override
-    public void deleteByObject(GatePass pass) {
-        delete(pass);
-    }
-
-    @Override
     public void deleteAll() {
         gatePasses.clear();
     }
 
-    public int count() {
+    public long count() {
         return gatePasses.size();
     }
 }

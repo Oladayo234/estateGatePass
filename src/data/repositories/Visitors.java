@@ -23,7 +23,7 @@ public class Visitors implements VisitorRepo {
     }
 
     @Override
-    public void save(Visitor visitor) {
+    public Visitor save(Visitor visitor) {
         if (visitor.getId() == 0) {
             visitor.setId(nextId++);
             visitors.add(visitor);
@@ -36,6 +36,7 @@ public class Visitors implements VisitorRepo {
                 visitors.add(visitor);
             }
         }
+        return visitor;
     }
 
     @Override
@@ -52,16 +53,11 @@ public class Visitors implements VisitorRepo {
     }
 
     @Override
-    public void deleteByObject(Visitor visitor) {
-        delete(visitor);
-    }
-
-    @Override
     public void deleteAll() {
         visitors.clear();
     }
 
-    public int count() {
+    public long count() {
         return visitors.size();
     }
 }

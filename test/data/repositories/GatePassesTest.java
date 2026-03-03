@@ -16,13 +16,13 @@ class GatePassesTest {
     @BeforeEach
     void setUp() {
         gatePasses = new GatePasses();
-        
+
         pass1 = new GatePass();
         pass1.setResidentId(1);
         pass1.setVisitorsId(1);
         pass1.setExpirationDate(LocalDateTime.now().plusHours(24));
         pass1.setValid(true);
-        
+
         pass2 = new GatePass();
         pass2.setResidentId(2);
         pass2.setVisitorsId(2);
@@ -33,7 +33,7 @@ class GatePassesTest {
     @Test
     void testThat_GatePass_AreSaved() {
         GatePass saved = gatePasses.save(pass1);
-        assertEquals(1, gatePasses.count());
+        assertEquals(1L, gatePasses.count());
         assertEquals(1, saved.getId());
         assertNotNull(saved);
     }
@@ -42,7 +42,7 @@ class GatePassesTest {
     void testThat_Multiple_GatePasses_AreSaved() {
         gatePasses.save(pass1);
         gatePasses.save(pass2);
-        assertEquals(2, gatePasses.count());
+        assertEquals(2L, gatePasses.count());
         assertEquals(1, pass1.getId());
         assertEquals(2, pass2.getId());
     }
@@ -80,7 +80,7 @@ class GatePassesTest {
         gatePasses.save(pass1);
         gatePasses.save(pass2);
         gatePasses.delete(pass1);
-        assertEquals(1, gatePasses.count());
+        assertEquals(1L, gatePasses.count());
         assertNull(gatePasses.findById(1));
     }
 
@@ -89,7 +89,7 @@ class GatePassesTest {
         gatePasses.save(pass1);
         gatePasses.save(pass2);
         gatePasses.deleteById(1);
-        assertEquals(1, gatePasses.count());
+        assertEquals(1L, gatePasses.count());
         assertNull(gatePasses.findById(1));
     }
 
@@ -97,7 +97,7 @@ class GatePassesTest {
     void testDeleteByObject() {
         gatePasses.save(pass1);
         gatePasses.deleteByObject(pass1);
-        assertEquals(0, gatePasses.count());
+        assertEquals(0L, gatePasses.count());
     }
 
     @Test
@@ -105,7 +105,7 @@ class GatePassesTest {
         gatePasses.save(pass1);
         gatePasses.save(pass2);
         gatePasses.deleteAll();
-        assertEquals(0, gatePasses.count());
+        assertEquals(0L, gatePasses.count());
     }
 
     @Test
@@ -113,10 +113,10 @@ class GatePassesTest {
         gatePasses.save(pass1);
         pass1.setValid(false);
         gatePasses.save(pass1);
-        
+
         GatePass found = gatePasses.findById(1);
         assertFalse(found.isValid());
-        assertEquals(1, gatePasses.count());
+        assertEquals(1L, gatePasses.count());
     }
 
     @Test
@@ -131,7 +131,7 @@ class GatePassesTest {
         LocalDateTime expiration = LocalDateTime.now().plusDays(1);
         pass1.setExpirationDate(expiration);
         gatePasses.save(pass1);
-        
+
         GatePass found = gatePasses.findById(1);
         assertNotNull(found.getExpirationDate());
     }
@@ -141,12 +141,12 @@ class GatePassesTest {
         gatePasses.save(pass1);
         gatePasses.save(pass2);
         gatePasses.deleteById(1);
-        
+
         GatePass pass3 = new GatePass();
         pass3.setResidentId(3);
         pass3.setVisitorsId(3);
         gatePasses.save(pass3);
-        
+
         assertEquals(3, pass3.getId());
     }
 }

@@ -14,12 +14,12 @@ class VisitorsTest {
     @BeforeEach
     void setUp() {
         visitors = new Visitors();
-        
+
         visitor1 = new Visitor();
         visitor1.setName("Christian Samuel");
         visitor1.setPurposeOfComing("Business meeting");
         visitor1.setPhoneNumber("08012345678");
-        
+
         visitor2 = new Visitor();
         visitor2.setName("Shalewa Wastar");
         visitor2.setPurposeOfComing("Social visit");
@@ -29,7 +29,7 @@ class VisitorsTest {
     @Test
     void testSaveVisitor() {
         visitors.save(visitor1);
-        assertEquals(1, visitors.count());
+        assertEquals(1L, visitors.count());
         assertEquals(1, visitor1.getId());
     }
 
@@ -37,7 +37,7 @@ class VisitorsTest {
     void testSaveMultipleVisitors() {
         visitors.save(visitor1);
         visitors.save(visitor2);
-        assertEquals(2, visitors.count());
+        assertEquals(2L, visitors.count());
         assertEquals(1, visitor1.getId());
         assertEquals(2, visitor2.getId());
     }
@@ -73,7 +73,7 @@ class VisitorsTest {
         visitors.save(visitor1);
         visitors.save(visitor2);
         visitors.delete(visitor1);
-        assertEquals(1, visitors.count());
+        assertEquals(1L, visitors.count());
         assertNull(visitors.findById(1));
     }
 
@@ -82,7 +82,7 @@ class VisitorsTest {
         visitors.save(visitor1);
         visitors.save(visitor2);
         visitors.deleteById(1);
-        assertEquals(1, visitors.count());
+        assertEquals(1L, visitors.count());
         assertNull(visitors.findById(1));
     }
 
@@ -90,7 +90,7 @@ class VisitorsTest {
     void testDeleteByObject() {
         visitors.save(visitor1);
         visitors.deleteByObject(visitor1);
-        assertEquals(0, visitors.count());
+        assertEquals(0L, visitors.count());
     }
 
     @Test
@@ -98,7 +98,7 @@ class VisitorsTest {
         visitors.save(visitor1);
         visitors.save(visitor2);
         visitors.deleteAll();
-        assertEquals(0, visitors.count());
+        assertEquals(0L, visitors.count());
     }
 
     @Test
@@ -106,9 +106,9 @@ class VisitorsTest {
         visitors.save(visitor1);
         visitor1.setName("Christian Updated");
         visitors.save(visitor1);
-        
+
         Visitor found = visitors.findById(1);
         assertEquals("Christian Updated", found.getName());
-        assertEquals(1, visitors.count());
+        assertEquals(1L, visitors.count());
     }
 }

@@ -54,16 +54,11 @@ public class Residents implements ResidentRepo {
     }
 
     @Override
-    public void deleteByObject(Resident resident) {
-        delete(resident);
-    }
-
-    @Override
     public void deleteAll() {
         residents.clear();
     }
 
-    public int count() {
+    public long count() {
         return residents.size();
     }
 }

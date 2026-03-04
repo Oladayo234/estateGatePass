@@ -5,7 +5,7 @@ import java.util.List;
 public interface ResidentRepo {
     List<Resident> findAll();
     Resident findById(int id);
-    void save(Resident resident);
+    Resident save(Resident resident);
     void delete(Resident resident);
     void deleteById(int id);
     void deleteAll();

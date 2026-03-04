@@ -24,13 +24,14 @@ public class Residents implements ResidentRepo {
     }
 
     @Override
-    public void save(Resident resident) {
+    public Resident save(Resident resident) {
         if (resident.getId() == 0) {
             resident.setId(nextId++);
         }
         if (!residents.contains(resident)) {
             residents.add(resident);
         }
+        return resident;
     }
 
     @Override

@@ -1,6 +1,7 @@
 package data.repositories;
 
 import data.models.GatePass;
+import data.models.Type;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -18,48 +19,48 @@ class GatePassesTest {
         gatePasses = new GatePasses();
 
         pass1 = new GatePass();
-        pass1.setResidentId(1);
-        pass1.setVisitorsId(1);
+        pass1.setResidentId("RES-1234-ABCD");
+        pass1.setVisitorsId("VIS-1234-ABCD");
         pass1.setExpirationDate(LocalDateTime.now().plusHours(24));
+        pass1.setType(Type.ENTRY);
         pass1.setValid(true);
 
         pass2 = new GatePass();
-        pass2.setResidentId(2);
-        pass2.setVisitorsId(2);
+        pass2.setResidentId("RES-5678-EFGH");
+        pass2.setVisitorsId("VIS-5678-EFGH");
         pass2.setExpirationDate(LocalDateTime.now().plusHours(48));
+        pass2.setType(Type.ENTRY);
         pass2.setValid(true);
     }
 
     @Test
-    void testThat_GatePass_AreSaved() {
+    void testSaveGatePass() {
         GatePass saved = gatePasses.save(pass1);
         assertEquals(1L, gatePasses.count());
-        assertEquals(1, saved.getId());
-        assertNotNull(saved);
+        assertTrue(saved.getId().startsWith("GP-"));
     }
 
     @Test
-    void testThat_Multiple_GatePasses_AreSaved() {
-        gatePasses.save(pass1);
-        gatePasses.save(pass2);
+    void testSaveMultipleGatePasses() {
+        GatePass savedOne = gatePasses.save(pass1);
+        GatePass savedTwo = gatePasses.save(pass2);
         assertEquals(2L, gatePasses.count());
-        assertEquals(1, pass1.getId());
-        assertEquals(2, pass2.getId());
+        assertTrue(savedOne.getId().startsWith("GP-"));
+        assertTrue(savedTwo.getId().startsWith("GP-"));
     }
 
     @Test
-    void testThat_FindById_ReturnsCorrect_gatePass() {
-        gatePasses.save(pass1);
-        GatePass found = gatePasses.findById(1);
+    void testFindById() {
+        GatePass saved = gatePasses.save(pass1);
+        GatePass found = gatePasses.findById(saved.getId());
         assertNotNull(found);
-        assertEquals(1, found.getResidentId());
-        assertEquals(1, found.getVisitorsId());
+        assertEquals("RES-1234-ABCD", found.getResidentId());
         assertTrue(found.isValid());
     }
 
     @Test
     void testFindByIdNotFound() {
-        GatePass found = gatePasses.findById(999);
+        GatePass found = gatePasses.findById("999");
         assertNull(found);
     }
 
@@ -77,20 +78,19 @@ class GatePassesTest {
 
     @Test
     void testDelete() {
-        gatePasses.save(pass1);
-        gatePasses.save(pass2);
+        GatePass saved = gatePasses.save(pass1);
         gatePasses.delete(pass1);
-        assertEquals(1L, gatePasses.count());
-        assertNull(gatePasses.findById(1));
+        assertEquals(0L, gatePasses.count());
+        assertNull(gatePasses.findById(saved.getId()));
     }
 
     @Test
     void testDeleteById() {
-        gatePasses.save(pass1);
+        GatePass saved = gatePasses.save(pass1);
         gatePasses.save(pass2);
-        gatePasses.deleteById(1);
+        gatePasses.deleteById(saved.getId());
         assertEquals(1L, gatePasses.count());
-        assertNull(gatePasses.findById(1));
+        assertNull(gatePasses.findById(saved.getId()));
     }
 
     @Test
@@ -103,43 +103,24 @@ class GatePassesTest {
 
     @Test
     void testUpdateGatePass() {
-        gatePasses.save(pass1);
+        GatePass saved = gatePasses.save(pass1);
         pass1.setValid(false);
         gatePasses.save(pass1);
-
-        GatePass found = gatePasses.findById(1);
+        GatePass found = gatePasses.findById(saved.getId());
         assertFalse(found.isValid());
         assertEquals(1L, gatePasses.count());
     }
 
     @Test
-    void testGatePassCreatedAtIsSet() {
-        gatePasses.save(pass1);
-        GatePass found = gatePasses.findById(1);
-        assertNotNull(found.getCreatedAt());
+    void testGatePassIsExpired() {
+        GatePass saved = gatePasses.save(pass1);
+        pass1.setExpirationDate(LocalDateTime.now().minusHours(1));
+        assertTrue(saved.isExpired());
     }
 
     @Test
-    void testGatePassExpirationDate() {
-        LocalDateTime expiration = LocalDateTime.now().plusDays(1);
-        pass1.setExpirationDate(expiration);
-        gatePasses.save(pass1);
-
-        GatePass found = gatePasses.findById(1);
-        assertNotNull(found.getExpirationDate());
-    }
-
-    @Test
-    void testIdAutoIncrement() {
-        gatePasses.save(pass1);
-        gatePasses.save(pass2);
-        gatePasses.deleteById(1);
-
-        GatePass pass3 = new GatePass();
-        pass3.setResidentId(3);
-        pass3.setVisitorsId(3);
-        gatePasses.save(pass3);
-
-        assertEquals(3, pass3.getId());
+    void testGatePassIsNotExpired() {
+        GatePass saved = gatePasses.save(pass1);
+        assertFalse(saved.isExpired());
     }
 }

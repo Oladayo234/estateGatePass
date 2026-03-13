@@ -28,31 +28,31 @@ class VisitorsTest {
 
     @Test
     void testSaveVisitor() {
-        visitors.save(visitor1);
+        Visitor saved = visitors.save(visitor1);
         assertEquals(1L, visitors.count());
-        assertEquals(1, visitor1.getId());
+        assertTrue(saved.getId().startsWith("VIS-"));
     }
 
     @Test
     void testSaveMultipleVisitors() {
-        visitors.save(visitor1);
-        visitors.save(visitor2);
+        Visitor savedOne = visitors.save(visitor1);
+        Visitor savedTwo = visitors.save(visitor2);
         assertEquals(2L, visitors.count());
-        assertEquals(1, visitor1.getId());
-        assertEquals(2, visitor2.getId());
+        assertTrue(savedOne.getId().startsWith("VIS-"));
+        assertTrue(savedTwo.getId().startsWith("VIS-"));
     }
 
     @Test
     void testFindById() {
-        visitors.save(visitor1);
-        Visitor found = visitors.findById(1);
+        Visitor saved = visitors.save(visitor1);
+        Visitor found = visitors.findById(saved.getId());
         assertNotNull(found);
         assertEquals("Christian Samuel", found.getName());
     }
 
     @Test
     void testFindByIdNotFound() {
-        Visitor found = visitors.findById(999);
+        Visitor found = visitors.findById("999");
         assertNull(found);
     }
 
@@ -70,20 +70,19 @@ class VisitorsTest {
 
     @Test
     void testDelete() {
-        visitors.save(visitor1);
-        visitors.save(visitor2);
+        Visitor saved = visitors.save(visitor1);
         visitors.delete(visitor1);
-        assertEquals(1L, visitors.count());
-        assertNull(visitors.findById(1));
+        assertEquals(0L, visitors.count());
+        assertNull(visitors.findById(saved.getId()));
     }
 
     @Test
     void testDeleteById() {
-        visitors.save(visitor1);
+        Visitor saved = visitors.save(visitor1);
         visitors.save(visitor2);
-        visitors.deleteById(1);
+        visitors.deleteById(saved.getId());
         assertEquals(1L, visitors.count());
-        assertNull(visitors.findById(1));
+        assertNull(visitors.findById(saved.getId()));
     }
 
     @Test
@@ -96,11 +95,10 @@ class VisitorsTest {
 
     @Test
     void testUpdateVisitor() {
-        visitors.save(visitor1);
+        Visitor saved = visitors.save(visitor1);
         visitor1.setName("Christian Updated");
         visitors.save(visitor1);
-
-        Visitor found = visitors.findById(1);
+        Visitor found = visitors.findById(saved.getId());
         assertEquals("Christian Updated", found.getName());
         assertEquals(1L, visitors.count());
     }

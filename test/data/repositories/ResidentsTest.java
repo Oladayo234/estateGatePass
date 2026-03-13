@@ -30,23 +30,22 @@ class ResidentsTest {
     void testSaveResident() {
         Resident saved = residents.save(resident1);
         assertEquals(1L, residents.count());
-        assertEquals(1, saved.getId());
-        assertNotNull(saved);
+        assertTrue(saved.getId().startsWith("RES-"));
     }
 
     @Test
     void testSaveMultipleResidents() {
-        residents.save(resident1);
-        residents.save(resident2);
+        Resident savedOne = residents.save(resident1);
+        Resident savedTwo = residents.save(resident2);
         assertEquals(2L, residents.count());
-        assertEquals(1, resident1.getId());
-        assertEquals(2, resident2.getId());
+        assertTrue(savedOne.getId().startsWith("RES-"));
+        assertTrue(savedTwo.getId().startsWith("RES-"));
     }
 
     @Test
     void testFindById() {
-        residents.save(resident1);
-        Resident found = residents.findById(1);
+        Resident saved = residents.save(resident1);
+        Resident found = residents.findById(saved.getId());
         assertNotNull(found);
         assertEquals("Oluwemawe Johnson", found.getName());
         assertEquals("Block A, Flat 5", found.getHouseAddress());
@@ -54,7 +53,7 @@ class ResidentsTest {
 
     @Test
     void testFindByIdNotFound() {
-        Resident found = residents.findById(999);
+        Resident found = residents.findById("999");
         assertNull(found);
     }
 
@@ -72,20 +71,19 @@ class ResidentsTest {
 
     @Test
     void testDelete() {
-        residents.save(resident1);
-        residents.save(resident2);
+        Resident saved = residents.save(resident1);
         residents.delete(resident1);
-        assertEquals(1L, residents.count());
-        assertNull(residents.findById(1));
+        assertEquals(0L, residents.count());
+        assertNull(residents.findById(saved.getId()));
     }
 
     @Test
     void testDeleteById() {
-        residents.save(resident1);
+        Resident saved = residents.save(resident1);
         residents.save(resident2);
-        residents.deleteById(1);
+        residents.deleteById(saved.getId());
         assertEquals(1L, residents.count());
-        assertNull(residents.findById(1));
+        assertNull(residents.findById(saved.getId()));
     }
 
     @Test
@@ -98,27 +96,13 @@ class ResidentsTest {
 
     @Test
     void testUpdateResident() {
-        residents.save(resident1);
+        Resident saved = residents.save(resident1);
         resident1.setName("Oluwemawe Updated");
         resident1.setHouseAddress("Block C, Flat 15");
         residents.save(resident1);
-
-        Resident found = residents.findById(1);
+        Resident found = residents.findById(saved.getId());
         assertEquals("Oluwemawe Updated", found.getName());
         assertEquals("Block C, Flat 15", found.getHouseAddress());
         assertEquals(1L, residents.count());
-    }
-
-    @Test
-    void testIdAutoIncrement() {
-        residents.save(resident1);
-        residents.save(resident2);
-        residents.deleteById(1);
-
-        Resident resident3 = new Resident();
-        resident3.setName("Christian Samuel");
-        residents.save(resident3);
-
-        assertEquals(3, resident3.getId());
     }
 }

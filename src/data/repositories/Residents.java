@@ -1,12 +1,13 @@
 package data.repositories;
 
 import data.models.Resident;
+import utils.RandomCodeGenerator;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class Residents implements ResidentRepo {
     private List<Resident> residents = new ArrayList<>();
-    private int nextId = 1;
 
     @Override
     public List<Resident> findAll() {
@@ -14,9 +15,9 @@ public class Residents implements ResidentRepo {
     }
 
     @Override
-    public Resident findById(int id) {
+    public Resident findById(String id) {
         for (Resident resident : residents) {
-            if (resident.getId() == id) {
+            if (resident.getId().equalsIgnoreCase(id)) {
                 return resident;
             }
         }
@@ -25,8 +26,8 @@ public class Residents implements ResidentRepo {
 
     @Override
     public Resident save(Resident resident) {
-        if (resident.getId() == 0) {
-            resident.setId(nextId++);
+        if (resident.getId() == null) {
+            resident.setId(RandomCodeGenerator.residentIdGenerator());
         }
         if (!residents.contains(resident)) {
             residents.add(resident);
@@ -40,7 +41,7 @@ public class Residents implements ResidentRepo {
     }
 
     @Override
-    public void deleteById(int id) {
+    public void deleteById(String id) {
         Resident resident = findById(id);
         if (resident != null) {
             residents.remove(resident);

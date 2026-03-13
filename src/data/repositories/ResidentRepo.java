@@ -4,10 +4,10 @@ import java.util.List;
 
 public interface ResidentRepo {
     List<Resident> findAll();
-    Resident findById(int id);
+    Resident findById(String id);
     Resident save(Resident resident);
     void delete(Resident resident);
-    void deleteById(int id);
+    void deleteById(String id);
     void deleteAll();
     long count();
 }

@@ -1,16 +1,27 @@
 package data.models;
 
 public class Resident {
-    private int id;
+    private String id;
     private String name;
     private String phoneNumber;
     private String houseAddress;
+    private String email;
+    private boolean isActive = true;
+    private boolean isSuspended = false;
 
-    public int getId() {
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -22,19 +33,35 @@ public class Resident {
         this.name = name;
     }
 
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
     public String getHouseAddress() {
         return houseAddress;
     }
 
     public void setHouseAddress(String houseAddress) {
         this.houseAddress = houseAddress;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
+    }
+
+    public boolean isSuspended() {
+        return isSuspended;
+    }
+
+    public void setSuspended(boolean suspended) {
+        isSuspended = suspended;
     }
 }

@@ -4,10 +4,10 @@ import java.util.List;
 
 public interface VisitorRepo {
     List<Visitor> findAll();
-    Visitor findById(int Id);
+    Visitor findById(String Id);
     Visitor save(Visitor visitor);
     void delete(Visitor visitor);
-    void deleteById(int Id);
+    void deleteById(String Id);
     void deleteAll();
     long count();
 }

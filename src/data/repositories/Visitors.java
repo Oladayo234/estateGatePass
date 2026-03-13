@@ -1,11 +1,12 @@
 package data.repositories;
 import data.models.Visitor;
+import utils.RandomCodeGenerator;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class Visitors implements VisitorRepo {
     private List<Visitor> visitors = new ArrayList<>();
-    private int nextId = 1;
 
     @Override
     public List<Visitor> findAll() {
@@ -13,9 +14,9 @@ public class Visitors implements VisitorRepo {
     }
 
     @Override
-    public Visitor findById(int id) {
+    public Visitor findById(String id) {
         for (Visitor visitor : visitors) {
-            if (visitor.getId() == id) {
+            if (visitor.getId().equalsIgnoreCase( id)) {
                 return visitor;
             }
         }
@@ -24,8 +25,8 @@ public class Visitors implements VisitorRepo {
 
     @Override
     public Visitor save(Visitor visitor) {
-        if (visitor.getId() == 0) {
-            visitor.setId(nextId++);
+        if (visitor.getId() == null) {
+            visitor.setId(RandomCodeGenerator.visitorIdGenerator());
         }
         if (!visitors.contains(visitor)) {
             visitors.add(visitor);
@@ -39,7 +40,7 @@ public class Visitors implements VisitorRepo {
     }
 
     @Override
-    public void deleteById(int id) {
+    public void deleteById(String id) {
         Visitor visitor = findById(id);
         if (visitor != null) {
             visitors.remove(visitor);

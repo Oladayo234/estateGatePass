@@ -1,12 +1,12 @@
 package data.repositories;
 import data.models.GatePass;
+import utils.RandomCodeGenerator;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class GatePasses implements GatePassRepo {
     private List<GatePass> gatePasses = new ArrayList<>();
-    private int nextId = 1;
 
     @Override
     public List<GatePass> findAll() {
@@ -14,9 +14,9 @@ public class GatePasses implements GatePassRepo {
     }
 
     @Override
-    public GatePass findById(int id) {
+    public GatePass findById(String id) {
         for (GatePass pass : gatePasses) {
-            if (pass.getId() == id) {
+            if (pass.getId().equalsIgnoreCase(id)) {
                 return pass;
             }
         }
@@ -25,8 +25,8 @@ public class GatePasses implements GatePassRepo {
 
     @Override
     public GatePass save(GatePass pass) {
-        if (pass.getId() == 0) {
-            pass.setId(nextId++);
+        if (pass.getId() == null) {
+            pass.setId(RandomCodeGenerator.gateIdGenerator());
         }
         if (!gatePasses.contains(pass)) {
             gatePasses.add(pass);
@@ -40,7 +40,7 @@ public class GatePasses implements GatePassRepo {
     }
 
     @Override
-    public void deleteById(int id) {
+    public void deleteById(String id) {
         GatePass pass = findById(id);
         if (pass != null) {
             gatePasses.remove(pass);

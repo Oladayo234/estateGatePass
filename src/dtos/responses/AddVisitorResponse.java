@@ -4,7 +4,6 @@ public class AddVisitorResponse {
     private String name;
     private String phoneNumber;
     private String purposeOfVisit;
-
     private String id;
 
     public String getName() {

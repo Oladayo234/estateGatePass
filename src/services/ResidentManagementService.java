@@ -7,22 +7,22 @@ import dtos.requests.OnboardResidentRequest;
 import dtos.responses.OnboardResidentResponse;
 import exceptions.ResidentAlreadyRegisteredException;
 import exceptions.ResidentDoesNotExistException;
-import utils.OnboardResident;
+import utils.OnboardResidentMapper;
 
 public class ResidentManagementService {
     private ResidentRepo residentRepo = new Residents();
 
     OnboardResidentResponse onboardResident(OnboardResidentRequest request) {
-        Resident resident = OnboardResident.map(request);
+        Resident resident = OnboardResidentMapper.map(request);
         if (residentRepo.findByPhone(resident.getPhoneNumber()) != null)
             throw new ResidentAlreadyRegisteredException("Resident already registered");
         Resident savedResident = residentRepo.save(resident);
-        return OnboardResident.map(savedResident);
+        return OnboardResidentMapper.map(savedResident);
     }
 
     OnboardResidentResponse viewResident(String id) {
         Resident resident = getResidentById(id);
-        return OnboardResident.map(resident);
+        return OnboardResidentMapper.map(resident);
     }
 
     void deleteResident(String id) {
@@ -34,7 +34,7 @@ public class ResidentManagementService {
         Resident resident = getResidentById(id);
         resident.setSuspended(true);
         residentRepo.save(resident);
-        return OnboardResident.map(resident);
+        return OnboardResidentMapper.map(resident);
     }
 
     private Resident getResidentById(String id) {

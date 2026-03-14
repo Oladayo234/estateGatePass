@@ -4,8 +4,7 @@ import data.models.Resident;
 import dtos.requests.OnboardResidentRequest;
 import dtos.responses.OnboardResidentResponse;
 
-public class OnboardResident {
-
+public class OnboardResidentMapper {
     public static Resident map(OnboardResidentRequest request) {
         Resident resident = new Resident();
         resident.setName(request.getName());

@@ -3,7 +3,7 @@ package data.models;
 public class Visitor {
     private String id;
     private String name;
-    private String purposeOfComing;
+    private String purposeOfVisit;
     private String phoneNumber;
 
     public String getId() {
@@ -22,12 +22,12 @@ public class Visitor {
         this.name = name;
     }
 
-    public String getPurposeOfComing() {
-        return purposeOfComing;
+    public String getPurposeOfVisit() {
+        return purposeOfVisit;
     }
 
-    public void setPurposeOfComing(String purposeOfComing) {
-        this.purposeOfComing = purposeOfComing;
+    public void setPurposeOfVisit(String purposeOfVisit) {
+        this.purposeOfVisit = purposeOfVisit;
     }
 
     public String getPhoneNumber() {

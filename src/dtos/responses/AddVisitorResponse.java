@@ -1,10 +1,10 @@
 package dtos.responses;
 
-public class OnboardResidentResponse {
+public class AddVisitorResponse {
     private String name;
-    private String email;
     private String phoneNumber;
-    private String address;
+    private String purposeOfVisit;
+
     private String id;
 
     public String getName() {
@@ -15,14 +15,6 @@ public class OnboardResidentResponse {
         this.name = name;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     public String getPhoneNumber() {
         return phoneNumber;
     }
@@ -31,12 +23,12 @@ public class OnboardResidentResponse {
         this.phoneNumber = phoneNumber;
     }
 
-    public String getAddress() {
-        return address;
+    public String getPurposeOfVisit() {
+        return purposeOfVisit;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setPurposeOfVisit(String purposeOfVisit) {
+        this.purposeOfVisit = purposeOfVisit;
     }
 
     public String getId() {
@@ -46,4 +38,5 @@ public class OnboardResidentResponse {
     public void setId(String id) {
         this.id = id;
     }
+
 }

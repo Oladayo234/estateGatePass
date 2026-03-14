@@ -25,6 +25,36 @@ public class Residents implements ResidentRepo {
     }
 
     @Override
+    public Resident findByName(String name) {
+        for (Resident resident : residents) {
+            if (resident.getName().equalsIgnoreCase(name)) {
+                return resident;
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public Resident findByEmail(String email) {
+        for (Resident resident : residents) {
+            if (resident.getEmail().equalsIgnoreCase(email)) {
+                return resident;
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public Resident findByPhone(String phoneNumber) {
+        for (Resident resident : residents) {
+            if (resident.getPhoneNumber().equalsIgnoreCase(phoneNumber)) {
+                return resident;
+            }
+        }
+        return null;
+    }
+
+    @Override
     public Resident save(Resident resident) {
         if (resident.getId() == null) {
             resident.setId(RandomCodeGenerator.residentIdGenerator());

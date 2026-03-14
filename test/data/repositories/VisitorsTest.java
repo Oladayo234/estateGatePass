@@ -17,12 +17,12 @@ class VisitorsTest {
 
         visitor1 = new Visitor();
         visitor1.setName("Christian Samuel");
-        visitor1.setPurposeOfComing("Business meeting");
+        visitor1.setPurposeOfVisit("Business meeting");
         visitor1.setPhoneNumber("08012345678");
 
         visitor2 = new Visitor();
         visitor2.setName("Shalewa Wastar");
-        visitor2.setPurposeOfComing("Social visit");
+        visitor2.setPurposeOfVisit("Social visit");
         visitor2.setPhoneNumber("08087654321");
     }
 

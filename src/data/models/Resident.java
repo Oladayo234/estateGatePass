@@ -1,10 +1,14 @@
 package data.models;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 public class Resident {
     private String id;
     private String name;
     private String phoneNumber;
     private String houseAddress;
+    private LocalDateTime dateOfRegistration;
     private String email;
     private boolean isActive = true;
     private boolean isSuspended = false;
@@ -63,5 +67,13 @@ public class Resident {
 
     public void setSuspended(boolean suspended) {
         isSuspended = suspended;
+    }
+
+    public LocalDateTime getDateOfRegistration() {
+        return dateOfRegistration;
+    }
+
+    public void setDateOfRegistration(LocalDateTime dateOfRegistration) {
+        this.dateOfRegistration = dateOfRegistration;
     }
 }

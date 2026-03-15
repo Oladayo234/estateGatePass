@@ -5,6 +5,7 @@ import dtos.requests.OnboardResidentRequest;
 import dtos.responses.OnboardResidentResponse;
 
 public class OnboardResidentMapper {
+
     public static Resident map(OnboardResidentRequest request) {
         Resident resident = new Resident();
         resident.setName(request.getName());
@@ -21,6 +22,7 @@ public class OnboardResidentMapper {
         response.setEmail(resident.getEmail());
         response.setAddress(resident.getHouseAddress());
         response.setPhoneNumber(resident.getPhoneNumber());
+        response.setDateOfRegistration(resident.getDateOfRegistration());
         return response;
     }
 }

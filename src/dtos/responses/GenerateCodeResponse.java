@@ -1,9 +1,10 @@
-package dtos.requests;
+package dtos.responses;
 
-public class AddVisitorRequest {
+public class GenerateCodeResponse {
     private String name;
     private String phoneNumber;
     private String purposeOfVisit;
+    private String id;
 
     public String getName() {
         return name;
@@ -28,4 +29,13 @@ public class AddVisitorRequest {
     public void setPurposeOfVisit(String purposeOfVisit) {
         this.purposeOfVisit = purposeOfVisit;
     }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
 }

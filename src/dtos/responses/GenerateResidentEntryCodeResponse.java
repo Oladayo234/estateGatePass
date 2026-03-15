@@ -4,13 +4,13 @@ import data.models.Type;
 
 import java.time.LocalDateTime;
 
-public class GenerateVisitorEntryCodeResponse {
+public class GenerateResidentEntryCodeResponse {
     private String residentId;
-    private String visitorName;
-    private String visitorId;
     private String otpCode;
     private Type codeType;
     private LocalDateTime expirationDate;
+    private String name;
+    private String address;
 
     public String getResidentId() {
         return residentId;
@@ -18,22 +18,6 @@ public class GenerateVisitorEntryCodeResponse {
 
     public void setResidentId(String residentId) {
         this.residentId = residentId;
-    }
-
-    public String getVisitorName() {
-        return visitorName;
-    }
-
-    public void setVisitorName(String visitorName) {
-        this.visitorName = visitorName;
-    }
-
-    public String getVisitorId() {
-        return visitorId;
-    }
-
-    public void setVisitorId(String visitorId) {
-        this.visitorId = visitorId;
     }
 
     public String getOtpCode() {
@@ -58,5 +42,21 @@ public class GenerateVisitorEntryCodeResponse {
 
     public void setExpirationDate(LocalDateTime expirationDate) {
         this.expirationDate = expirationDate;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 }

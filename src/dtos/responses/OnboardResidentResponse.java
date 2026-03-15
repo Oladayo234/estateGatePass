@@ -1,11 +1,22 @@
 package dtos.responses;
 
+import java.time.LocalDateTime;
+
 public class OnboardResidentResponse {
     private String name;
     private String email;
     private String phoneNumber;
     private String address;
     private String id;
+    private LocalDateTime dateOfRegistration = LocalDateTime.now();
+
+    public LocalDateTime getDateOfRegistration() {
+        return dateOfRegistration;
+    }
+
+    public void setDateOfRegistration(LocalDateTime dateOfRegistration) {
+        this.dateOfRegistration = dateOfRegistration;
+    }
 
     public String getName() {
         return name;

@@ -1,11 +1,39 @@
 package dtos.requests;
 
+import data.models.Type;
 import java.time.LocalDateTime;
 
 public class GenerateVisitorEntryCodeRequest {
+    private String visitorName;
+    private String visitorPhoneNumber;
+    private String purposeOfVisit;
     private String residentId;
-    private String visitorId;
+    private Type codeType;
     private LocalDateTime expirationDate;
+
+    public String getVisitorName() {
+        return visitorName;
+    }
+
+    public void setVisitorName(String visitorName) {
+        this.visitorName = visitorName;
+    }
+
+    public String getVisitorPhoneNumber() {
+        return visitorPhoneNumber;
+    }
+
+    public void setVisitorPhoneNumber(String visitorPhoneNumber) {
+        this.visitorPhoneNumber = visitorPhoneNumber;
+    }
+
+    public String getPurposeOfVisit() {
+        return purposeOfVisit;
+    }
+
+    public void setPurposeOfVisit(String purposeOfVisit) {
+        this.purposeOfVisit = purposeOfVisit;
+    }
 
     public String getResidentId() {
         return residentId;
@@ -15,12 +43,12 @@ public class GenerateVisitorEntryCodeRequest {
         this.residentId = residentId;
     }
 
-    public String getVisitorId() {
-        return visitorId;
+    public Type getCodeType() {
+        return codeType;
     }
 
-    public void setVisitorId(String visitorId) {
-        this.visitorId = visitorId;
+    public void setCodeType(Type codeType) {
+        this.codeType = codeType;
     }
 
     public LocalDateTime getExpirationDate() {

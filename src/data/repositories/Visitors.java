@@ -24,6 +24,26 @@ public class Visitors implements VisitorRepo {
     }
 
     @Override
+    public Visitor findByName(String name) {
+        for (Visitor visitor : visitors) {
+            if (visitor.getName().equalsIgnoreCase(name)) {
+                return visitor;
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public Visitor findByPhone(String phoneNumber) {
+        for (Visitor visitor : visitors) {
+            if (visitor.getPhoneNumber().equalsIgnoreCase(phoneNumber)) {
+                return visitor;
+            }
+        }
+        return null;
+    }
+
+    @Override
     public Visitor save(Visitor visitor) {
         if (visitor.getId() == null) {
             visitor.setId(RandomCodeGenerator.visitorIdGenerator());

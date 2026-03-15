@@ -24,6 +24,16 @@ public class GatePasses implements GatePassRepo {
     }
 
     @Override
+    public GatePass findByOtp(String otp) {
+        for (GatePass pass : gatePasses) {
+            if (pass.getOtp().equalsIgnoreCase(otp)) {
+                return pass;
+            }
+        }
+        return null;
+    }
+
+    @Override
     public GatePass save(GatePass pass) {
         if (pass.getId() == null) {
             pass.setId(RandomCodeGenerator.gateIdGenerator());

@@ -6,8 +6,8 @@ public class GatePass {
     private String otp;
     private String id;
     private String residentId;
-    private String visitorsId;
-    private Type type;
+    private Visitor visitor;
+    private Type codeType;
     private LocalDateTime createdAt =  LocalDateTime.now();
     private LocalDateTime expirationDate;
     private boolean isValid = true;
@@ -36,20 +36,20 @@ public class GatePass {
         this.residentId = residentId;
     }
 
-    public String getVisitorsId() {
-        return visitorsId;
+    public Visitor getVisitor() {
+        return visitor;
     }
 
-    public void setVisitorsId(String visitorsId) {
-        this.visitorsId = visitorsId;
+    public void setVisitor(Visitor visitor) {
+        this.visitor = visitor;
     }
 
-    public Type getType() {
-        return type;
+    public Type getCodeType() {
+        return codeType;
     }
 
-    public void setType(Type type) {
-        this.type = type;
+    public void setCodeType(Type codeType) {
+        this.codeType = codeType;
     }
 
     public LocalDateTime getCreatedAt() {
@@ -79,4 +79,5 @@ public class GatePass {
     public boolean isExpired() {
         return expirationDate != null && LocalDateTime.now().isAfter(expirationDate);
     }
+
 }

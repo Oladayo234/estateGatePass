@@ -3,6 +3,7 @@ package dtos.responses;
 import data.models.Type;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class GenerateVisitorEntryCodeResponse {
     private String residentId;
@@ -58,5 +59,10 @@ public class GenerateVisitorEntryCodeResponse {
 
     public void setExpirationDate(LocalDateTime expirationDate) {
         this.expirationDate = expirationDate;
+    }
+
+    public String getFormattedExpirationDate() {
+        if (expirationDate == null) return null;
+        return expirationDate.format(DateTimeFormatter.ofPattern("dd-MMM-yyyy hh:mm a"));
     }
 }

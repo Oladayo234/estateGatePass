@@ -11,11 +11,11 @@ import static utils.OnboardResidentMapper.map;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class ResidentManagementService {
-    private ResidentRepo residentRepo = new Residents();
+    private final ResidentRepo residentRepo = new Residents();
 
     OnboardResidentResponse onboardResident(OnboardResidentRequest request) {
+        validateResidentDetails(request);
         Resident resident = map(request);
         validateCheckDuplicateFor(resident);
         Resident savedResident = residentRepo.save(resident);
@@ -27,7 +27,7 @@ public class ResidentManagementService {
         return map(resident);
     }
 
-    public List<OnboardResidentResponse> viewResident() {
+    public List<OnboardResidentResponse> viewAllResident() {
         List<OnboardResidentResponse> responses = new ArrayList<>();
         for(Resident resident : residentRepo.findAll()) {
             responses.add(map(resident));
@@ -44,7 +44,16 @@ public class ResidentManagementService {
         Resident resident = getResidentById(id);
         resident.setSuspended(true);
         residentRepo.save(resident);
-        return resident.getName() + "Resident has been suspended";
+        return resident.getName() + " has been suspended";
+    }
+
+    private static void validateResidentDetails(OnboardResidentRequest request) {
+        if (request.getName() == null || request.getName().isBlank()) {
+            throw new IllegalArgumentException("Resident name cannot be blank");
+        }
+        if (request.getPhoneNumber() == null || request.getPhoneNumber().isBlank()) {
+            throw new IllegalArgumentException("Resident phone cannot be blank");
+        }
     }
 
     private Resident getResidentById(String id) {

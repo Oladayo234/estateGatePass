@@ -20,14 +20,12 @@ class GatePassesTest {
 
         pass1 = new GatePass();
         pass1.setResidentId("RES-1234-ABCD");
-        pass1.setVisitorsId("VIS-1234-ABCD");
         pass1.setExpirationDate(LocalDateTime.now().plusHours(24));
         pass1.setCodeType(Type.ENTRY);
         pass1.setValid(true);
 
         pass2 = new GatePass();
         pass2.setResidentId("RES-5678-EFGH");
-        pass2.setVisitorsId("VIS-5678-EFGH");
         pass2.setExpirationDate(LocalDateTime.now().plusHours(48));
         pass2.setCodeType(Type.ENTRY);
         pass2.setValid(true);

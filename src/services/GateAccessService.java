@@ -7,46 +7,52 @@ import data.models.Visitor;
 import data.repositories.*;
 import dtos.requests.GenerateResidentEntryCodeRequest;
 import dtos.requests.GenerateVisitorEntryCodeRequest;
+import dtos.responses.GenerateExitCodeResponse;
 import dtos.responses.GenerateResidentEntryCodeResponse;
 import dtos.responses.GenerateVisitorEntryCodeResponse;
+import dtos.responses.ValidateCodeResponse;
 import exceptions.*;
-import utils.GenerateEntryVisitorCodeMapper;
-import utils.GenerateResidentEntryCodeMapper;
-import utils.RandomCodeGenerator;
+import utils.*;
 
 import java.time.LocalDateTime;
 
 public class GateAccessService {
-   private GatePassRepo gatePassRepo = new GatePasses();
-   private ResidentRepo residentRepo = new Residents();
-   private VisitorRepo visitorRepo = new Visitors();
+   GatePassRepo gatePassRepo = new GatePasses();
+   ResidentRepo residentRepo = new Residents();
+   VisitorRepo visitorRepo = new Visitors();
 
    GenerateVisitorEntryCodeResponse generateVisitorEntryCode(GenerateVisitorEntryCodeRequest request){
-      Resident resident = getResidentById(request.getResidentId());
+      Resident resident = validateResidentIsActive(getResidentById(request.getResidentId()));
       Visitor savedVisitor = createVisitor(request);
       GatePass savedGatePass = createVisitorGatePass(request, savedVisitor, resident);
       return GenerateEntryVisitorCodeMapper.map(savedGatePass);
    }
 
    GenerateResidentEntryCodeResponse generateResidentEntryCode(GenerateResidentEntryCodeRequest request){
-      Resident resident = getResidentById(request.getResidentId());
+      Resident resident = validateResidentIsActive(getResidentById(request.getResidentId()));
       GatePass savedGatePass = createResidentGatePass(request, resident);
       return GenerateResidentEntryCodeMapper.map(savedGatePass, resident);
    }
 
-   public String generateExitCode(String otp){
+   GenerateExitCodeResponse generateExitCode(String otp){
       GatePass gatePass = getGatePassByOtp(otp);
       gatePass.setOtp(RandomCodeGenerator.getOtp());
       gatePass.setCodeType(Type.EXIT);
       GatePass savedGatePass = gatePassRepo.save(gatePass);
-      return "Exit Code generated successfully";
+      Resident resident = getResidentById(savedGatePass.getResidentId());
+      return GenerateExitCodeMapper.map(savedGatePass, resident);
    }
 
-   public String validateCode(String otp){
+   ValidateCodeResponse validateCode(String otp){
       GatePass gatePass = getGatePassByOtp(otp);
+      validateOtpGatePass(gatePass);
+      Resident resident = getResidentById(gatePass.getResidentId());
+      return ValidateCodeMapper.map(gatePass, resident);
+   }
+
+   private static void validateOtpGatePass(GatePass gatePass) {
       if (gatePass.isExpired()) throw new InvalidGatePassException("Gate pass has expired");
       if (!gatePass.isValid()) throw new InvalidGatePassException("Gate pass has been disabled");
-      return "Access granted";
    }
 
    public String extendTime(String gatePassId, LocalDateTime newExpirationDate){
@@ -56,11 +62,16 @@ public class GateAccessService {
       return "Time has been extended successfully";
    }
 
-   public  String disableCode(String gatePassId){
+   public String disableCode(String gatePassId){
       GatePass gatePass = getGatePassById(gatePassId);
       gatePass.setValid(false);
       gatePassRepo.save(gatePass);
-      return "Gatepass succesfully disabled";
+      return "Gate pass successfully disabled";
+   }
+
+   private Resident validateResidentIsActive(Resident resident) {
+      if (resident.isSuspended()) throw new ResidentSuspendedException("Resident is suspended");
+      return resident;
    }
 
    private GatePass getGatePassById(String id) {
@@ -85,8 +96,7 @@ public class GateAccessService {
       gatePass.setResidentId(resident.getId());
       gatePass.setCodeType(request.getCodeType());
       gatePass.setOtp(RandomCodeGenerator.getOtp());
-      GatePass savedGatePass = gatePassRepo.save(gatePass);
-      return savedGatePass;
+       return gatePassRepo.save(gatePass);
    }
 
    private GatePass createVisitorGatePass(GenerateVisitorEntryCodeRequest request, Visitor savedVisitor, Resident resident) {
@@ -100,8 +110,7 @@ public class GateAccessService {
       gatePass.setVisitor(savedVisitor);
       gatePass.setResidentId(resident.getId());
       gatePass.setOtp(RandomCodeGenerator.getOtp());
-      GatePass savedGatePass = gatePassRepo.save(gatePass);
-      return savedGatePass;
+       return gatePassRepo.save(gatePass);
    }
 
    private Visitor createVisitor(GenerateVisitorEntryCodeRequest request) {
@@ -112,19 +121,19 @@ public class GateAccessService {
       return visitorRepo.save(visitor);
    }
 
-   private Visitor getVisitorById(String id) {
-      Visitor visitor = visitorRepo.findById(id);
-      if (visitor == null) throw new VisitorDoesNotExistException("visitor not found");
-      return visitor;
-   }
-
    private Resident getResidentById(String id) {
       Resident resident = residentRepo.findById(id);
       if (resident == null) throw new ResidentDoesNotExistException("Resident not found");
       return resident;
    }
 
-   private void validateCheckDuplicateFor(Visitor visitor) {
+/*   private Visitor getVisitorById(String id) {
+      Visitor visitor = visitorRepo.findById(id);
+      if (visitor == null) throw new VisitorDoesNotExistException("visitor not found");
+      return visitor;
+   }*/
+
+/*   private void validateCheckDuplicateFor(Visitor visitor) {
       if (visitorRepo.findByPhone(visitor.getPhoneNumber()) != null)
          throw new VisitorAlreadyRegisteredException("Visitor already registered");
    }
@@ -132,5 +141,5 @@ public class GateAccessService {
    private void validateCheckDuplicateFor(Resident resident) {
       if (residentRepo.findByPhone(resident.getPhoneNumber()) != null)
          throw new ResidentAlreadyRegisteredException("Resident already registered");
-   }
+   }*/
 }

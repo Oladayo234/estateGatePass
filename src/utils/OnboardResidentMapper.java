@@ -23,6 +23,7 @@ public class OnboardResidentMapper {
         response.setAddress(resident.getHouseAddress());
         response.setPhoneNumber(resident.getPhoneNumber());
         response.setDateOfRegistration(resident.getDateOfRegistration());
+        response.setSuspended(resident.isSuspended());
         return response;
     }
 }

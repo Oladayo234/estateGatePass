@@ -9,6 +9,15 @@ public class OnboardResidentResponse {
     private String address;
     private String id;
     private LocalDateTime dateOfRegistration = LocalDateTime.now();
+    private boolean isSuspended;
+
+    public boolean isSuspended() {
+        return isSuspended;
+    }
+
+    public void setSuspended(boolean suspended) {
+        isSuspended = suspended;
+    }
 
     public LocalDateTime getDateOfRegistration() {
         return dateOfRegistration;

@@ -1,0 +1,23 @@
+package africa.semicolon.data.models;
+
+import lombok.Data;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
+@Data
+@Document(collection = "residents")
+public class Resident {
+    @Id
+    private String id;
+    private String name;
+    private String phoneNumber;
+    private String houseAddress;
+    private LocalDateTime dateOfRegistration;
+    private String email;
+    private boolean isActive = true;
+    private boolean isSuspended = false;
+
+}

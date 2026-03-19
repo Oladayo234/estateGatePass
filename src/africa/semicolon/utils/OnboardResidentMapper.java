@@ -4,6 +4,8 @@ import africa.semicolon.data.models.Resident;
 import africa.semicolon.dtos.requests.OnboardResidentRequest;
 import africa.semicolon.dtos.responses.OnboardResidentResponse;
 
+import java.time.LocalDateTime;
+
 public class OnboardResidentMapper {
 
     public static Resident map(OnboardResidentRequest request) {
@@ -12,6 +14,7 @@ public class OnboardResidentMapper {
         resident.setEmail(request.getEmail());
         resident.setHouseAddress(request.getAddress());
         resident.setPhoneNumber(request.getPhoneNumber());
+        resident.setDateOfRegistration(LocalDateTime.now());
         return resident;
     }
 

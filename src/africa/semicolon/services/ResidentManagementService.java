@@ -6,6 +6,7 @@ import africa.semicolon.dtos.requests.OnboardResidentRequest;
 import africa.semicolon.dtos.responses.OnboardResidentResponse;
 import africa.semicolon.exceptions.ResidentAlreadyRegisteredException;
 import africa.semicolon.exceptions.ResidentDoesNotExistException;
+import africa.semicolon.utils.RandomCodeGenerator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +23,7 @@ public class ResidentManagementService {
         validateResidentDetails(request);
         Resident resident = map(request);
         validateCheckDuplicateFor(resident);
+        resident.setId(RandomCodeGenerator.residentIdGenerator());
         Resident savedResident = residentRepo.save(resident);
         return map(savedResident);
     }

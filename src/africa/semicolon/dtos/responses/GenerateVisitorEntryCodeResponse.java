@@ -1,6 +1,7 @@
 package africa.semicolon.dtos.responses;
 
 import africa.semicolon.data.models.Type;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -13,6 +14,8 @@ public class GenerateVisitorEntryCodeResponse {
     private String visitorId;
     private String otpCode;
     private Type codeType;
+
+    @JsonFormat(pattern = "dd-MMM-yyyy hh:mm a")
     private LocalDateTime expirationDate;
 
     public String getFormattedExpirationDate() {

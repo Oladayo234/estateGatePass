@@ -19,7 +19,7 @@ public class RandomCodeGenerator {
         StringBuilder code = new StringBuilder();
         Random random = new Random();
         for (int count = 0; count < 8; count++) {
-            code.append(random.nextBoolean() ? (char) ('A' + random.nextInt(26)) : random.nextInt(10));
+            code.append(random.nextBoolean() ? (char) ('A' + random.nextInt(26)) : (char) ('0' + random.nextInt(10)));
         }
         return code.toString();
     }
@@ -28,7 +28,7 @@ public class RandomCodeGenerator {
         Random random = new Random();
         for (int count = 0; count < 8; count++) {
             if (count == 4) {code.append("-");}
-            code.append(random.nextBoolean() ? (char) ('A' + random.nextInt(26)) : random.nextInt(10));
+            code.append(random.nextBoolean() ? (char) ('A' + random.nextInt(26)) : (char) ('0' + random.nextInt(10)));
         }
         return code.toString();
     }

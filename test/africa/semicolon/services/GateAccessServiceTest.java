@@ -12,7 +12,6 @@ import africa.semicolon.dtos.responses.GenerateVisitorEntryCodeResponse;
 import africa.semicolon.dtos.responses.ValidateCodeResponse;
 import africa.semicolon.exceptions.InvalidGatePassException;
 import africa.semicolon.exceptions.ResidentSuspendedException;
-import africa.semicolon.services.GateAccessService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

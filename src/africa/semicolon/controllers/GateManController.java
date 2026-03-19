@@ -1,4 +1,5 @@
 package africa.semicolon.controllers;
 
-public class ResidentController {
+public class GateManController {
+    
 }

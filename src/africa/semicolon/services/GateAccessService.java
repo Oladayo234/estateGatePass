@@ -3,17 +3,18 @@ import africa.semicolon.data.models.GatePass;
 import africa.semicolon.data.models.Resident;
 import africa.semicolon.data.models.Type;
 import africa.semicolon.data.models.Visitor;
-import africa.semicolon.data.repositories.*;
-import africa.semicolon.exceptions.*;
-import africa.semicolon.utils.*;
 import africa.semicolon.dtos.requests.GenerateResidentEntryCodeRequest;
 import africa.semicolon.dtos.requests.GenerateVisitorEntryCodeRequest;
 import africa.semicolon.dtos.responses.GenerateExitCodeResponse;
 import africa.semicolon.dtos.responses.GenerateResidentEntryCodeResponse;
 import africa.semicolon.dtos.responses.GenerateVisitorEntryCodeResponse;
 import africa.semicolon.dtos.responses.ValidateCodeResponse;
+import africa.semicolon.data.repositories.GatePassRepo;
+import africa.semicolon.data.repositories.ResidentRepo;
+import africa.semicolon.exceptions.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import africa.semicolon.utils.*;
 
 import java.time.LocalDateTime;
 @Service
@@ -95,6 +96,7 @@ public class GateAccessService {
       }
       gatePass.setResidentId(resident.getId());
       gatePass.setCodeType(request.getCodeType());
+      gatePass.setId(RandomCodeGenerator.gateIdGenerator());
       gatePass.setOtp(RandomCodeGenerator.getOtp());
        return gatePassRepo.save(gatePass);
    }
@@ -109,6 +111,7 @@ public class GateAccessService {
       gatePass.setCodeType(request.getCodeType());
       gatePass.setVisitor(savedVisitor);
       gatePass.setResidentId(resident.getId());
+      gatePass.setId(RandomCodeGenerator.gateIdGenerator());
       gatePass.setOtp(RandomCodeGenerator.getOtp());
        return gatePassRepo.save(gatePass);
    }

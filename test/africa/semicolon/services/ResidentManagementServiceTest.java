@@ -5,7 +5,6 @@ import africa.semicolon.dtos.requests.OnboardResidentRequest;
 import africa.semicolon.dtos.responses.OnboardResidentResponse;
 import africa.semicolon.exceptions.ResidentAlreadyRegisteredException;
 import africa.semicolon.exceptions.ResidentDoesNotExistException;
-import africa.semicolon.services.ResidentManagementService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

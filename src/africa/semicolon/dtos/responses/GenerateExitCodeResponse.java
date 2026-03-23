@@ -1,6 +1,7 @@
 package africa.semicolon.dtos.responses;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -10,11 +11,12 @@ import java.time.format.DateTimeFormatter;
 public class GenerateExitCodeResponse {
     private String id;
 
+    @JsonIgnore
     @JsonFormat(pattern = "dd-MMM-yyyy hh:mm a")
     private LocalDateTime expirationDate;
     private String otp;
     private String residentAddress;
-    private String visitorName;
+//    private String visitorName;
     private String name;
     private boolean isValid;
 

@@ -4,6 +4,7 @@ import africa.semicolon.data.models.Resident;
 import africa.semicolon.data.repositories.ResidentRepo;
 import africa.semicolon.dtos.requests.OnboardResidentRequest;
 import africa.semicolon.dtos.responses.OnboardResidentResponse;
+import africa.semicolon.dtos.responses.ViewResidentResponse;
 import africa.semicolon.exceptions.ResidentAlreadyRegisteredException;
 import africa.semicolon.exceptions.ResidentDoesNotExistException;
 import africa.semicolon.utils.RandomCodeGenerator;
@@ -11,6 +12,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import static africa.semicolon.utils.OnboardResidentMapper.map;
+import static africa.semicolon.utils.OnboardResidentMapper.mapToViewResponse;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,10 +36,10 @@ public class ResidentManagementService {
         return map(resident);
     }
 
-    public List<OnboardResidentResponse> viewAllResident() {
-        List<OnboardResidentResponse> responses = new ArrayList<>();
+    public List<ViewResidentResponse> viewAllResident() {
+        List<ViewResidentResponse> responses = new ArrayList<>();
         for(Resident resident : residentRepo.findAll()) {
-            responses.add(map(resident));
+            responses.add(mapToViewResponse(resident));
         }
         return responses;
     }
@@ -51,6 +54,13 @@ public class ResidentManagementService {
         resident.setSuspended(true);
         residentRepo.save(resident);
         return resident.getName() + " has been suspended";
+    }
+
+    public String reactivateResident(String id) {
+        Resident resident = getResidentById(id);
+        resident.setSuspended(false);
+        residentRepo.save(resident);
+        return resident.getName() + " has been reactivated";
     }
 
     private static void validateResidentDetails(OnboardResidentRequest request) {

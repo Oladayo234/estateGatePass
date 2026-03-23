@@ -60,10 +60,21 @@ public class EstateManagerController {
     @PatchMapping("/residents/{id}/disable")
     public ResponseEntity<?> disableResident(@PathVariable String id){
         try{
-            return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("success", "Resident disabled succesfully",  residentManagementService.disableResident(id)));
+            return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("success", "Resident disabled successfully",  residentManagementService.disableResident(id)));
         }
         catch (Exception e){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ApiResponse("error", e.getMessage(), null));
+        }
+    }
+
+    @PatchMapping("/residents/{id}/reactivate")
+    public ResponseEntity<?> reactivateResident(@PathVariable String id) {
+        try {
+            return ResponseEntity.status(HttpStatus.OK)
+                    .body(new ApiResponse("success", "Resident reactivated successfully", residentManagementService.reactivateResident(id)));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(new ApiResponse("error", e.getMessage(), null));
         }
     }
 }

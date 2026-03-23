@@ -18,6 +18,7 @@ public class GenerateEntryVisitorCodeMapper {
 
     public static GenerateVisitorEntryCodeResponse map(GatePass gatePass) {
        GenerateVisitorEntryCodeResponse response = new GenerateVisitorEntryCodeResponse();
+       response.setGatePassId(gatePass.getId());
        response.setVisitorName(gatePass.getVisitor().getName());
        response.setVisitorId(gatePass.getVisitor().getId());
        response.setExpirationDate(gatePass.getExpirationDate());

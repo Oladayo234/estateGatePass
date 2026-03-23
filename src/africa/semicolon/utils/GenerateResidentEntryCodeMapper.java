@@ -16,6 +16,7 @@ public class GenerateResidentEntryCodeMapper {
     }
     public static GenerateResidentEntryCodeResponse map(GatePass gatePass,  Resident resident) {
         GenerateResidentEntryCodeResponse response = new GenerateResidentEntryCodeResponse();
+        response.setGatePassId(gatePass.getId());
         response.setResidentId(gatePass.getResidentId());
         response.setCodeType(gatePass.getCodeType());
         response.setExpirationDate(gatePass.getExpirationDate());

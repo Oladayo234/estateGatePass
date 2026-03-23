@@ -3,6 +3,7 @@ package africa.semicolon.utils;
 import africa.semicolon.data.models.Resident;
 import africa.semicolon.dtos.requests.OnboardResidentRequest;
 import africa.semicolon.dtos.responses.OnboardResidentResponse;
+import africa.semicolon.dtos.responses.ViewResidentResponse;
 
 import java.time.LocalDateTime;
 
@@ -27,6 +28,16 @@ public class OnboardResidentMapper {
         response.setPhoneNumber(resident.getPhoneNumber());
         response.setDateOfRegistration(resident.getDateOfRegistration());
         response.setSuspended(resident.isSuspended());
+        return response;
+    }
+
+
+    public static ViewResidentResponse mapToViewResponse(Resident resident){
+        ViewResidentResponse response = new ViewResidentResponse();
+        response.setId(resident.getId());
+        response.setName(resident.getName());
+        response.setPhoneNumber(resident.getPhoneNumber());
+        response.setHouseAddress(resident.getHouseAddress());
         return response;
     }
 }

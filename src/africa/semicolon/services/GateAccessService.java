@@ -45,16 +45,15 @@ public class GateAccessService {
       return GenerateExitCodeMapper.map(savedGatePass, resident);
    }
 
-   public ValidateCodeResponse validateCode(String otp){
+   public ValidateCodeResponse validateCode(String otp, Type expectedType){
       GatePass gatePass = getGatePassByOtp(otp);
+      if (gatePass.getCodeType() != expectedType)
+         throw new InvalidGatePassException("Invalid code type");
       validateOtpGatePass(gatePass);
+      gatePass.setValid(false);
+      gatePassRepo.save(gatePass);
       Resident resident = getResidentById(gatePass.getResidentId());
       return ValidateCodeMapper.map(gatePass, resident);
-   }
-
-   private static void validateOtpGatePass(GatePass gatePass) {
-      if (gatePass.isExpired()) throw new InvalidGatePassException("Gate pass has expired");
-      if (!gatePass.isValid()) throw new InvalidGatePassException("Gate pass has been disabled");
    }
 
    public String extendTime(String gatePassId, LocalDateTime newExpirationDate){
@@ -70,6 +69,12 @@ public class GateAccessService {
       gatePassRepo.save(gatePass);
       return "Gate pass successfully disabled";
    }
+
+   private static void validateOtpGatePass(GatePass gatePass) {
+      if (gatePass.isExpired()) throw new InvalidGatePassException("Gate pass has expired");
+      if (!gatePass.isValid()) throw new InvalidGatePassException("Gate pass has been disabled");
+   }
+
 
    private Resident validateResidentIsActive(Resident resident) {
       if (resident.isSuspended()) throw new ResidentSuspendedException("Resident is suspended");
@@ -90,7 +95,7 @@ public class GateAccessService {
    private GatePass createResidentGatePass(GenerateResidentEntryCodeRequest request, Resident resident) {
       GatePass gatePass = new GatePass();
       if (request.getExpirationDate() == null) {
-         gatePass.setExpirationDate(LocalDateTime.now().plusHours(24));
+         gatePass.setExpirationDate(LocalDateTime.now().plusHours(5));
       } else {
          gatePass.setExpirationDate(request.getExpirationDate());
       }
@@ -104,7 +109,7 @@ public class GateAccessService {
    private GatePass createVisitorGatePass(GenerateVisitorEntryCodeRequest request, Visitor savedVisitor, Resident resident) {
       GatePass gatePass = new GatePass();
       if (request.getExpirationDate() == null) {
-         gatePass.setExpirationDate(LocalDateTime.now().plusHours(24));
+         gatePass.setExpirationDate(LocalDateTime.now().plusHours(5));
       } else {
          gatePass.setExpirationDate(request.getExpirationDate());
       }
@@ -118,6 +123,7 @@ public class GateAccessService {
 
    private Visitor createVisitor(GenerateVisitorEntryCodeRequest request) {
       Visitor visitor = new Visitor();
+      visitor.setId(RandomCodeGenerator.visitorIdGenerator());
       visitor.setName(request.getVisitorName());
       visitor.setPhoneNumber(request.getVisitorPhoneNumber());
       visitor.setPurposeOfVisit(request.getPurposeOfVisit());

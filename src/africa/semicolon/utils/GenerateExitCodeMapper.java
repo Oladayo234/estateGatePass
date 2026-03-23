@@ -11,7 +11,7 @@ public class GenerateExitCodeMapper {
         if (gatePass.getVisitor() != null) {
             response.setName(gatePass.getVisitor().getName());
             response.setId(gatePass.getVisitor().getId());
-            response.setVisitorName(gatePass.getVisitor().getName());
+//            response.setVisitorName(gatePass.getVisitor().getName());
         } else {
             response.setName(resident.getName());
             response.setId(resident.getId());

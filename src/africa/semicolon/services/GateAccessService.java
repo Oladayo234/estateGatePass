@@ -38,6 +38,9 @@ public class GateAccessService {
 
    public GenerateExitCodeResponse generateExitCode(String otp){
       GatePass gatePass = getGatePassByOtp(otp);
+      if (gatePass.getCodeType() != Type.ENTRY) {
+         throw new InvalidGatePassException("Can only generate exit code from an entry code");
+      }
       gatePass.setOtp(RandomCodeGenerator.getOtp());
       gatePass.setCodeType(Type.EXIT);
       GatePass savedGatePass = gatePassRepo.save(gatePass);

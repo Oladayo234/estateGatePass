@@ -141,7 +141,7 @@ class GateAccessServiceTest {
         request.setCodeType(Type.ENTRY);
         String otp = service.generateResidentEntryCode(request).getOtpCode();
 
-        ValidateCodeResponse response = service.validateCode(otp);
+        ValidateCodeResponse response = service.validateCode(otp, Type.ENTRY);
 
         assertEquals(resident.getName(), response.getResidentName());
     }
@@ -160,7 +160,7 @@ class GateAccessServiceTest {
         request.setExpirationDate(LocalDateTime.now().minusHours(1));
         String otp = service.generateResidentEntryCode(request).getOtpCode();
 
-        assertThrows(InvalidGatePassException.class, () -> service.validateCode(otp));
+        assertThrows(InvalidGatePassException.class, () -> service.validateCode(otp, Type.ENTRY));
     }
 
     @Test
@@ -179,7 +179,7 @@ class GateAccessServiceTest {
         String gatePassId = gatePassRepo.findByOtp(otp).getId();
         service.disableCode(gatePassId);
 
-        assertThrows(InvalidGatePassException.class, () -> service.validateCode(otp));
+        assertThrows(InvalidGatePassException.class, () -> service.validateCode(otp, Type.ENTRY));
     }
 
     @Test

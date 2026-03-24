@@ -7,7 +7,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.time.LocalDateTime;
 
 @Data
-@Document(collection = "gate pass")
+@Document(collection = "gate_passes")
 public class GatePass {
     private String otp;
     @Id

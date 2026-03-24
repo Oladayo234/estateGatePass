@@ -1,7 +1,8 @@
 package africa.semicolon.utils;
-import java.util.Random;
+import java.security.SecureRandom;
 
 public class RandomCodeGenerator {
+    private static final SecureRandom SECURE_RANDOM = new SecureRandom();
 
     public static String gateIdGenerator(){
         return reuseableIdGenerator("GP-");
@@ -17,18 +18,16 @@ public class RandomCodeGenerator {
 
     public static String getOtp(){
         StringBuilder code = new StringBuilder();
-        Random random = new Random();
         for (int count = 0; count < 8; count++) {
-            code.append(random.nextBoolean() ? (char) ('A' + random.nextInt(26)) : (char) ('0' + random.nextInt(10)));
+            code.append(SECURE_RANDOM.nextBoolean() ? (char) ('A' + SECURE_RANDOM.nextInt(26)) : (char) ('0' + SECURE_RANDOM.nextInt(10)));
         }
         return code.toString();
     }
 
     private static String getString(StringBuilder code) {
-        Random random = new Random();
         for (int count = 0; count < 8; count++) {
             if (count == 4) {code.append("-");}
-            code.append(random.nextBoolean() ? (char) ('A' + random.nextInt(26)) : (char) ('0' + random.nextInt(10)));
+            code.append(SECURE_RANDOM.nextBoolean() ? (char) ('A' + SECURE_RANDOM.nextInt(26)) : (char) ('0' + SECURE_RANDOM.nextInt(10)));
         }
         return code.toString();
     }

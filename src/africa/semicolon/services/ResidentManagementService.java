@@ -70,6 +70,16 @@ public class ResidentManagementService {
         if (request.getPhoneNumber() == null || request.getPhoneNumber().isBlank()) {
             throw new IllegalArgumentException("Resident phone cannot be blank");
         }
+        if (request.getEmail() != null && !request.getEmail().isBlank()) {
+            if (!isValidEmail(request.getEmail())) {
+                throw new IllegalArgumentException("Invalid email format");
+            }
+        }
+    }
+
+    private static boolean isValidEmail(String email) {
+        String emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$";
+        return email.matches(emailRegex);
     }
 
     private Resident getResidentById(String id) {
